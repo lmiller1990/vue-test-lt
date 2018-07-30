@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h2>
+    <h2 data-t-title>
       {{ post.title }}
     </h2>
 
-    <div>
+    <div data-t-body>
       {{ post.body }}
     </div>
   </div>
