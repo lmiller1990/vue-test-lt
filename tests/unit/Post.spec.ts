@@ -13,32 +13,19 @@ const post: Post = {
 setResponse({ data: post, status: 200 })
 
 describe("Post", () => {
-  it("APIを叩いて、レスポンスのデータをアサインして、レンダーする", async () => {
+  it("APIを叩いて、レスポンスのデータをアサインして、レンダーする", 
+      async () => {
     const wrapper = shallowMount(PostComponent)
 
     // 全ての同期なオペレーションを終わらせる関数
     await flushPromises()
 
-    expect(getRequestUrl()).toMatch("https://jsonplaceholder.typicode.com/posts/1")
+    expect(getRequestUrl()).toMatch("/api/posts/1")
 
-    expect(wrapper.find("[data-t-title]").text()).toBe(post.title)
-    expect(wrapper.find("[data-t-body]").text()).toBe(post.body)
-  })
-
-  it("たたしいエンドポイントを叩く", async () => {
-    const wrapper = shallowMount(PostComponent)
-
-    await flushPromises()
-
-    expect(getRequestUrl()).toMatch("https://jsonplaceholder.typicode.com/posts/1")
-  })
-
-  it("たたしいペイロードをアサインする", async () => {
-    const wrapper = shallowMount(PostComponent)
-
-    await flushPromises()
-
-    expect(wrapper.vm.post).toEqual(post)
+    expect(wrapper.find("[data-t-title]").text())
+      .toBe(post.title)
+    expect(wrapper.find("[data-t-body]").text())
+      .toBe(post.body)
   })
 
   it("ポストのデータを正しくレンダー", () => {
@@ -50,9 +37,27 @@ describe("Post", () => {
         return { post: post }
       }
     })
-
-    expect(wrapper.find("[data-t-title]").text()).toBe(post.title)
-    expect(wrapper.find("[data-t-body]").text()).toBe(post.body)
+    expect(wrapper.find("[data-t-title]").text())
+      .toBe(post.title)
+    expect(wrapper.find("[data-t-body]").text())
+      .toBe(post.body)
     // スナップショットでも大丈夫です。
+  })
+
+  it("たたしいペイロードをアサインする", async () => {
+    const getPost = jest.fn() // モック関数
+    const wrapper = shallowMount(PostComponent, {
+      methods: { getPost } // 本当の関数の代わりに使う。
+    })
+    await flushPromises()
+    expect(getPost).toHaveBeenCalled()
+  })
+
+  it("たたしいエンドポイントを叩いてレスポンスをアサインする", 
+  　　async () => {
+    const wrapper = shallowMount(PostComponent)
+    await flushPromises()
+    expect(getRequestUrl()).toMatch("/api/posts/1")
+    expect(wrapper.vm.post).toEqual(post)
   })
 })

@@ -1,12 +1,7 @@
 <template>
   <div>
-    <h2 data-t-title>
-      {{ post.title }}
-    </h2>
-
-    <div data-t-body>
-      {{ post.body }}
-    </div>
+    <h2 data-t-title>{{ post.title }}</h2>
+    <div data-t-body>{{ post.body }}</div>
   </div>
 </template>
 
@@ -16,24 +11,17 @@ import { Post } from "../interfaces/Post"
 import Vue from 'vue';
 
 export default Vue.extend({
-  name: 'HelloWorld',
-  props: {
-    msg: String,
-  },
+  props: { msg: String },
 
   data() {
-    return {
-      post: {} as Post
-    }
-  },
+    return { post: {} as Post }
+  }, 
 
-  created() {
-    this.getPost()
-  },
+  created() { this.getPost() }, 
 
   methods: {
     async getPost() {
-      const response = await axios.get("https://jsonplaceholder.typicode.com/posts/1")
+      const response = await axios.get("/api/posts/1")
       const { id, title, body } = response.data
       this.post = { id, title, body }
     }
