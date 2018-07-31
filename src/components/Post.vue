@@ -25,7 +25,6 @@ export default Vue.extend({
     return {
       post: {} as Post
     }
-    
   },
 
   created() {
@@ -35,13 +34,8 @@ export default Vue.extend({
   methods: {
     async getPost() {
       const response = await axios.get("https://jsonplaceholder.typicode.com/posts/1")
-     
-     console.log(response)
-      this.post = {
-        id: response.data.id, 
-        title: response.data.title,
-        body: response.data.body
-      }
+      const { id, title, body } = response.data
+      this.post = { id, title, body }
     }
   }
 });
