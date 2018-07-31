@@ -9,7 +9,7 @@ let response: any
 function get(_url: string): Response {
   url = _url
 
-  return {} as Response
+  return response
 }
 
 export function getRequestUrl(): string {
