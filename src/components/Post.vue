@@ -11,19 +11,9 @@ import { Post } from "../interfaces/Post"
 import Vue from 'vue';
 
 export default Vue.extend({
-  props: { msg: String },
-
-  data() {
-    return { post: {} as Post }
-  }, 
-
-  created() { this.getPost() }, 
-
-  methods: {
-    async getPost() {
-      const response = await axios.get("/api/posts/1")
-      const { id, title, body } = response.data
-      this.post = { id, title, body }
+  props: { 
+    post: {
+      type: Object as () => Post
     }
   }
 });
